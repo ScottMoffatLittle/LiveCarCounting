@@ -36,7 +36,7 @@ class VehicleCounter():
         droi_frame = get_roi_frame(self.frame, self.droi)
         initial_bboxes = get_bounding_boxes(droi_frame, self.detector)
         for box in initial_bboxes:
-            _blob = create_blob(box, frame, self.tracker)
+            _blob = create_blob(box, self.frame, self.tracker)
             self.blobs[self.blob_id] = _blob
             self.blob_id += 1
 
@@ -62,7 +62,7 @@ class VehicleCounter():
             # count vehicles that have left the frame if no counting line exists
             # or those that have passed the counting line if one exists
             if (self.counting_line == None and \
-                    (blob.num_consecutive_tracking_failures == self.mctf or blob.num_consecutive_detection_failures == mcdf) and \
+                    (blob.num_consecutive_tracking_failures == self.mctf or blob.num_consecutive_detection_failures == self.mcdf) and \
                     not blob.counted) \
                         or \
                     (self.counting_line != None and \
